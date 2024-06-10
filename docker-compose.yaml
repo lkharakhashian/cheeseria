@@ -1,0 +1,44 @@
+services:
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - cheeseria-net
+    container_name: node-container
+    ports:
+      - '5001:5000'
+    expose:
+      - '5001'
+    environment:
+      NODE_ENV: development
+      DB_HOST: db
+      DB_PORT: 3306
+      # TODO: move to github secrets
+      DB_USER: liz
+      DB_PASSWORD: root
+      DB_NAME: cheeseria
+      SERVER_PORT: 5000
+    depends_on:
+      - db
+
+  db:
+    image: mysql:latest
+    restart: always
+    container_name: mysql-container
+    environment:
+      MYSQL_DATABASE: 'cheeseria'
+      MYSQL_USER: 'liz'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    networks:
+      - cheeseria-net
+    volumes:
+      - my-db:/var/lib/mysql
+volumes:
+  my-db:
+
+networks:
+  cheeseria-net:
+    name: cheeseria-net
+    driver: bridge

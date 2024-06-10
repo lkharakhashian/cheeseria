@@ -1,0 +1,237 @@
+# TODO: store images in the cloud(not use https://www.cheese.com)
+databaseChangeLog:
+- changeSet:
+      id: createCheeseTable
+      author: liz
+      changes:
+        - createTable:
+            tableName: cheeses
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: color
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: image
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: createdAt
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updatedAt
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+- changeSet:
+      id: createPriceTable
+      author: liz
+      changes:
+        - createTable:
+            tableName: prices
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: cheeseId
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: DECIMAL(10, 2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: createdAt
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: updatedAt
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - addForeignKeyConstraint:
+                  baseTableName: price
+                  baseColumnNames: cheese_id
+                  referencedTableName: cheese
+                  referencedColumnNames: id
+                  constraintName: fk_cheese_id
+- changeSet:
+      id: insertCheeseData
+      author: liz
+      changes:
+        - insert:
+            tableName: cheeses
+            columns:
+              - column:
+                  name: name
+                  value: 'Provolone'
+              - column:
+                  name: color
+                  value: 'pale yellow'
+              - column:
+                  name: image
+                  value: 'https://www.cheese.com/media/img/cheese/Provolone.jpg'
+        - insert:
+            tableName: cheeses
+            columns:
+              - column:
+                  name: name
+                  value: 'Parmesan cheese'
+              - column:
+                  name: color
+                  value: 'straw'
+              - column:
+                  name: image
+                  value: 'https://www.cheese.com/media/img/cheese/parmesan_on_wooden_surface.jpg'
+        - insert:
+            tableName: cheeses
+            columns:
+              - column:
+                  name: name
+                  value: 'Camembert'
+              - column:
+                  name: color
+                  value: 'pale yellow'
+              - column:
+                  name: image
+                  value: 'https://www.cheese.com/media/img/cheese-suggestion/CamembertStLoup_800x.jpg'
+        - insert:
+            tableName: cheeses
+            columns:
+              - column:
+                  name: name
+                  value: 'Gorgonzola'
+              - column:
+                  name: color
+                  value: 'yellow'
+              - column:
+                  name: image
+                  value: 'https://www.cheese.com/media/img/cheese/Gorgonzola_niUHULx.jpg'
+        - insert:
+            tableName: cheeses
+            columns:
+              - column:
+                  name: name
+                  value: 'Mozzarella'
+              - column:
+                  name: color
+                  value: 'white'
+              - column:
+                  name: image
+                  value: 'https://www.cheese.com/media/img/cheese/mozzarella_cheese_on_wooden_cutting_board.jpg'
+- changeSet:
+      id: insertPriceData
+      author: liz
+      changes:
+        - insert:
+            tableName: prices
+            columns:
+              - column:
+                  name: cheeseId
+                  value: 1
+              - column:
+                  name: price
+                  value: 8.90
+              - column:
+                  name: createdAt
+                  value: '2024-06-11 19:12:30'
+              - column:
+                  name: updatedAt
+                  value: '2024-06-11 19:12:30'
+        - insert:
+            tableName: prices
+            columns:
+              - column:
+                  name: cheeseId
+                  value: 2
+              - column:
+                  name: price
+                  value: 18.90
+              - column:
+                  name: createdAt
+                  value: '2024-06-11 19:45:32'
+              - column:
+                  name: updatedAt
+                  value: '2024-06-11 19:45:32'
+        - insert:
+            tableName: prices
+            columns:
+              - column:
+                  name: cheeseId
+                  value: 3
+              - column:
+                  name: price
+                  value: 14.00
+              - column:
+                  name: createdAt
+                  value: '2024-06-11 19:01:32'
+              - column:
+                  name: updatedAt
+                  value: '2024-06-11 19:01:32'
+        - insert:
+            tableName: prices
+            columns:
+              - column:
+                  name: cheeseId
+                  value: 4
+              - column:
+                  name: price
+                  value: 10.00
+              - column:
+                  name: createdAt
+                  value: '2024-06-11 19:12:32'
+              - column:
+                  name: updatedAt
+                  value: '2024-06-11 19:12:32'
+        - insert:
+            tableName: prices
+            columns:
+              - column:
+                  name: cheeseId
+                  value: 5
+              - column:
+                  name: price
+                  value: 11.99
+              - column:
+                  name: createdAt
+                  value: '2024-06-11 19:12:32'
+              - column:
+                  name: updatedAt
+                  value: '2024-06-11 19:12:32'
+- changeSet:
+      id: insertSecondPriceData
+      author: liz
+      changes:
+        - insert:
+            tableName: prices
+            columns:
+              - column:
+                  name: cheeseId
+                  value: 5
+              - column:
+                  name: price
+                  value: 12.49
+              - column:
+                  name: createdAt
+                  value: '2024-06-11 19:21:32'
+              - column:
+                  name: updatedAt
+                  value: '2024-06-11 19:22:32'
